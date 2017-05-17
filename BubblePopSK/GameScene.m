@@ -10,11 +10,16 @@
 @interface GameScene ()
 @property (nonatomic) SKSpriteNode *bubble2;
 @property (nonatomic) NSMutableArray *bubbles;
+@property (nonatomic) int score;
 @property (nonatomic) NSMutableArray *tappedBubbles;
 
 @end
 @implementation GameScene {
 }
+
+@synthesize counterLabel;
+int score;
+
 
 -(id)initWithSize:(CGSize)size
 {
@@ -36,6 +41,7 @@
 //        self.bubble2.position = CGPointMake(200, 200);
 //        [self addChild:self.bubble2];
 //        [self addBubble];
+        [self drawLabels];
 
         for (int i = 0; i < 10; i++)
         {
@@ -45,6 +51,38 @@
         
     }
     return self;
+}
+
+//id wait = [SKAction waitForDuration:2.5];
+//id run = [SKAction runBlock:^{
+//    // your code here ...
+//}];
+//[node runAction:[SKAction sequence:@[wait, run]]];
+
+-(void) drawLabels
+{
+    self.counterLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica-Light"];
+    self.counterLabel.name = @"ScoreLabel";
+    self.counterLabel.text = @"0";
+    self.counterLabel.fontSize = 20;
+    self.counterLabel.fontColor = [SKColor blackColor];
+    self.counterLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    self.counterLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
+    self.counterLabel.position = CGPointMake(self.frame.size.width - 20, self.frame.size.height-20); // change x,y to location you want
+    self.counterLabel.zPosition = 900;
+    [self addChild: self.counterLabel];
+    
+    self.timerLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica-Light"];
+    self.timerLabel.name = @"TimerLabel";
+    self.timerLabel.text = @"60";
+    self.timerLabel.fontSize = 20;
+    self.timerLabel.fontColor = [SKColor blackColor];
+    self.timerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    self.timerLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
+    self.timerLabel.position = CGPointMake(self.frame.origin.x, self.frame.size.height-20); // change x,y to location you want
+    self.timerLabel.zPosition = 900;
+    [self addChild: self.timerLabel];
+    
 }
 
 
@@ -155,6 +193,7 @@
     if ([node.name containsString:@"Bubble"]) {
         NSLog(@"Bubble was touched!");
         [self addScore:node.name];
+        [self updateScore];
         [node runAction:[SKAction fadeOutWithDuration:0]];
     }
     
@@ -163,6 +202,26 @@
 
 -(void) addScore: (NSString*) bubbleType
 {
+    NSDictionary *bubbleValues = [self createBubbleValueDictionary];
+    NSString* value = [bubbleValues valueForKey:bubbleType];
+    score = score + [value intValue];
+}
+
+-(void) updateScore
+{
+    self.counterLabel.text = [NSString stringWithFormat:@"%d", score];
+}
+
+
+-(NSDictionary*) createBubbleValueDictionary
+{
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                @"1", @"RedBubble",
+                @"2", @"PinkBubble",
+                @"5", @"GreenBubble",
+                @"8", @"BlueBubble",
+                @"10", @"BlackBubble",
+                nil];
     
 }
 

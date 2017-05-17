@@ -9,4 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface GameScene : SKScene
+@property (nonatomic, strong) SKLabelNode *counterLabel;
+@property (nonatomic, strong) SKLabelNode *timerLabel;
 @end
