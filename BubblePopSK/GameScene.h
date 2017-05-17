@@ -11,4 +11,10 @@
 @interface GameScene : SKScene
 @property (nonatomic, strong) SKLabelNode *counterLabel;
 @property (nonatomic, strong) SKLabelNode *timerLabel;
+@property (nonatomic) int score;
+@property (nonatomic) int time;
+@property (nonatomic) int initialTime;
+@property (nonatomic) int maxBubbles;
+@property (nonatomic) NSMutableArray *tappedBubbles;
+@property (nonatomic) NSMutableArray *bubbles;
 @end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5744E81A49A3AAC2E08487D3730C460FB2F2C5FF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "28686E48EAF205810A67A749B56E63E600A9A22B" : 9223372036854775807,
+    "5744E81A49A3AAC2E08487D3730C460FB2F2C5FF" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7D5DB2FF-9DF4-442D-8048-BBA72C3B1B0E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "28686E48EAF205810A67A749B56E63E600A9A22B" : "BubblePop\/",
+    "5744E81A49A3AAC2E08487D3730C460FB2F2C5FF" : "BubblePopSK\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BubblePopSK",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BubblePopSK.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jacknes\/BubblePop",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "28686E48EAF205810A67A749B56E63E600A9A22B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jacknes\/BubblePopSK",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5744E81A49A3AAC2E08487D3730C460FB2F2C5FF"
+    }
+  ]
+}

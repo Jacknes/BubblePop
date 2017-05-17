@@ -9,16 +9,15 @@
 #import "GameScene.h"
 @interface GameScene ()
 @property (nonatomic) SKSpriteNode *bubble2;
-@property (nonatomic) NSMutableArray *bubbles;
-@property (nonatomic) int score;
-@property (nonatomic) NSMutableArray *tappedBubbles;
+
+
 
 @end
 @implementation GameScene {
 }
 
-@synthesize counterLabel;
-int score;
+@synthesize counterLabel, timerLabel, score, time, maxBubbles, tappedBubbles, bubbles, initialTime;
+
 
 
 -(id)initWithSize:(CGSize)size
@@ -41,23 +40,115 @@ int score;
 //        self.bubble2.position = CGPointMake(200, 200);
 //        [self addChild:self.bubble2];
 //        [self addBubble];
-        [self drawLabels];
-
-        for (int i = 0; i < 10; i++)
-        {
-            [self addBubble];
-        }
+       
+//        id wait = [SKAction waitForDuration:2.5];
+//        id run = [SKAction runBlock:^{
+//            // your code here ...
+//        }];
+//        [node runAction:[SKAction sequence:@[wait, run]]];
+        maxBubbles = 10;
+        time = 45;
+        initialTime = 45;
+        [self initialiseGame];
         
         
     }
     return self;
 }
 
-//id wait = [SKAction waitForDuration:2.5];
-//id run = [SKAction runBlock:^{
-//    // your code here ...
-//}];
-//[node runAction:[SKAction sequence:@[wait, run]]];
+
+-(void) initialiseGame
+{
+    bubbles = [[NSMutableArray alloc] init];
+    tappedBubbles = [[NSMutableArray alloc] init];
+    [self drawLabels];
+    
+    [self addBubbles:maxBubbles];
+    [self initialiseTimer];
+}
+
+
+-(void) initialiseTimer
+{
+    
+    SKAction *updateLabel = [SKAction runBlock:^{
+        timerLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)time];
+        if (time != initialTime){
+            [self updateBubbles];
+        }
+        NSLog(@"Number of bubbles: %lu", bubbles.count);
+        time--;
+        
+    }];
+    
+    SKAction *wait = [SKAction waitForDuration:1.0];
+    
+//    // Create a combined action.
+//    SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
+//    [self runAction:[SKAction repeatAction:updateLabelAndWait count:gameTime] completion:^{
+//        timerLabel.text = @"GAME OVER!";
+//    }];
+    SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
+    [timerLabel runAction:[SKAction repeatAction:updateLabelAndWait count:time] completion:^{
+        timerLabel.text = @"GAME OVER!";
+        [self gameOver];
+
+    }];
+}
+
+
+-(void) gameOver
+{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Game over!"
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"OK", nil];
+    [alert show];
+}
+
+
+-(void) updateBubbles
+{
+    //Generate a random number of the current bubbles to remove.
+     int randomNumber = arc4random_uniform((int)bubbles.count);
+    //remove that number randomly.
+    [self removeBubbles:randomNumber];
+    //Determine how many bubbles are missing from max.
+    //int numberOfBubblesTapped = maxBubbles - (int)bubbles.count;
+    //int numberToAddBack = arc4random_uniform(maxBubbles - numberOfBubblesTapped);
+    int numberToAddFromTaps = maxBubbles - (int)bubbles.count;
+    [self addBubbles:randomNumber + numberToAddFromTaps];
+    //generate a number from 0 to the that number to add back.
+    //Add these bubbles back onto the screen
+}
+
+
+-(void) addBubbles: (int) numberOfBubblesToAdd
+{
+    for (int i = 0; i < numberOfBubblesToAdd; i++)
+    {
+        if (bubbles.count < maxBubbles){
+            [self addBubble];
+        }
+    }
+}
+
+-(void) removeBubbles: (int) numberToRemove
+{
+    if (numberToRemove <= bubbles.count)
+    {
+        for (int i = 0; i < numberToRemove; i++)
+        {
+            int randomNumber = arc4random_uniform((int)bubbles.count);
+            SKSpriteNode * bubble =  [bubbles objectAtIndex:randomNumber];
+            [bubble runAction:[SKAction fadeOutWithDuration:0]];
+            [bubbles removeObjectAtIndex:randomNumber];
+        }
+    }
+}
+
 
 -(void) drawLabels
 {
@@ -79,7 +170,7 @@ int score;
     self.timerLabel.fontColor = [SKColor blackColor];
     self.timerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     self.timerLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
-    self.timerLabel.position = CGPointMake(self.frame.origin.x, self.frame.size.height-20); // change x,y to location you want
+    self.timerLabel.position = CGPointMake(self.frame.origin.x + 20, self.frame.size.height-20); // change x,y to location you want
     self.timerLabel.zPosition = 900;
     [self addChild: self.timerLabel];
     
@@ -185,18 +276,21 @@ int score;
     return false;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     
-    if ([node.name containsString:@"Bubble"]) {
+    if ([node.name containsString:@"Bubble"])
+    {
         NSLog(@"Bubble was touched!");
+        [self.tappedBubbles addObject:node];
+        [self.bubbles removeObject:node];
         [self addScore:node.name];
         [self updateScore];
         [node runAction:[SKAction fadeOutWithDuration:0]];
     }
-    
 }
 
 
@@ -204,12 +298,12 @@ int score;
 {
     NSDictionary *bubbleValues = [self createBubbleValueDictionary];
     NSString* value = [bubbleValues valueForKey:bubbleType];
-    score = score + [value intValue];
+    self.score = self.score + [value intValue];
 }
 
 -(void) updateScore
 {
-    self.counterLabel.text = [NSString stringWithFormat:@"%d", score];
+    self.counterLabel.text = [NSString stringWithFormat:@"%d", self.score];
 }
 
 
