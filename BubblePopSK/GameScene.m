@@ -7,6 +7,7 @@
 //
 
 #import "GameScene.h"
+#import "HighScoreTableViewController.h"
 @interface GameScene ()
 @property (nonatomic) SKSpriteNode *bubble2;
 
@@ -16,7 +17,7 @@
 @implementation GameScene {
 }
 
-@synthesize counterLabel, timerLabel, score, time, maxBubbles, tappedBubbles, bubbles, initialTime;
+@synthesize counterLabel, timerLabel, countdownLabel, score, time, maxBubbles, tappedBubbles, bubbles, initialTime;
 
 
 
@@ -46,10 +47,18 @@
 //            // your code here ...
 //        }];
 //        [node runAction:[SKAction sequence:@[wait, run]]];
-        maxBubbles = 10;
+        maxBubbles = 15;
         time = 45;
         initialTime = 45;
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        [self showCountdown];
+
+
         [self initialiseGame];
+      
+        
         
         
     }
@@ -65,6 +74,38 @@
     
     [self addBubbles:maxBubbles];
     [self initialiseTimer];
+}
+
+-(void) showCountdown
+{
+    self.countdownLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica-Light"];
+    self.countdownLabel.name = @"ScoreLabel";
+    self.countdownLabel.text = @"4";
+    self.countdownLabel.fontSize = 50;
+    self.countdownLabel.fontColor = [SKColor blackColor];
+    self.countdownLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    self.countdownLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
+    self.countdownLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height /2); // change x,y to location you want
+    self.countdownLabel.zPosition = 900;
+    [self addChild: self.countdownLabel];
+    SKAction *updateLabel = [SKAction runBlock:^{
+        int count = [self.countdownLabel.text intValue];
+        count--;
+        self.countdownLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)count];
+        
+    }];
+    
+    SKAction *wait = [SKAction waitForDuration:1.0];
+    
+    //    // Create a combined action.
+    //    SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
+    //    [self runAction:[SKAction repeatAction:updateLabelAndWait count:gameTime] completion:^{
+    //        timerLabel.text = @"GAME OVER!";
+    //    }];
+    SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
+    [countdownLabel runAction:[SKAction repeatAction:updateLabelAndWait count:3] completion:^{
+                [self.countdownLabel runAction:[SKAction fadeOutWithDuration:0]];
+    }];
 }
 
 
@@ -90,9 +131,8 @@
 //    }];
     SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
     [timerLabel runAction:[SKAction repeatAction:updateLabelAndWait count:time] completion:^{
-        timerLabel.text = @"GAME OVER!";
+        //timerLabel.text = @"GAME OVER!";
         [self gameOver];
-
     }];
 }
 
@@ -106,6 +146,37 @@
                           cancelButtonTitle:@"Cancel"
                           otherButtonTitles:@"OK", nil];
     [alert show];
+    
+    [self addNewScore:@"jack" andScore:score];
+    
+    NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
+
+    
+}
+
+-(void) addNewScore:(NSString *) name andScore: (int) playerScore
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *highScoreNames = [defaults arrayForKey:@"HighScoreNames"];
+    NSArray *highScores = [defaults arrayForKey:@"HighScores"];
+    if (highScoreNames != nil)
+    {
+        NSArray *newHighScoreNames = [highScoreNames arrayByAddingObject:name];
+        NSArray *newHighScores = [highScores arrayByAddingObject:[NSString stringWithFormat:@"%d", playerScore]];
+        [defaults setObject:newHighScoreNames forKey:@"HighScoreNames"];
+        [defaults setObject:newHighScores forKey:@"HighScores"];
+        [defaults synchronize];
+    } else {
+        NSMutableArray *highScoreNames = [[NSMutableArray alloc]init];
+        NSMutableArray *highScores = [[NSMutableArray alloc]init];
+        [highScoreNames addObject:name];
+        [highScores addObject:[NSString stringWithFormat:@"%d", playerScore]];
+        [defaults setObject:[highScoreNames copy] forKey:@"HighScoreNames"];
+        [defaults setObject:[highScores copy] forKey:@"HighScores"];
+        
+    }
 }
 
 
@@ -118,7 +189,7 @@
     //Determine how many bubbles are missing from max.
     //int numberOfBubblesTapped = maxBubbles - (int)bubbles.count;
     //int numberToAddBack = arc4random_uniform(maxBubbles - numberOfBubblesTapped);
-    int numberToAddFromTaps = maxBubbles - (int)bubbles.count;
+    int numberToAddFromTaps = arc4random_uniform(maxBubbles - (int)bubbles.count);
     [self addBubbles:randomNumber + numberToAddFromTaps];
     //generate a number from 0 to the that number to add back.
     //Add these bubbles back onto the screen
@@ -298,7 +369,26 @@
 {
     NSDictionary *bubbleValues = [self createBubbleValueDictionary];
     NSString* value = [bubbleValues valueForKey:bubbleType];
-    self.score = self.score + [value intValue];
+    
+    if (tappedBubbles.count > 1) {
+        SKNode *node = [self.tappedBubbles objectAtIndex:tappedBubbles.count-2];
+        if (node != nil)
+        {
+            if (bubbleType == node.name)
+            {
+                float scoreToAdd = [value intValue] * 1.5;
+                self.score = self.score + (int)lroundf(scoreToAdd);
+            } else
+            {
+                self.score = self.score + [value intValue];
+            }
+        }
+    } else
+    {
+        self.score = self.score + [value intValue];
+    }
+   
+
 }
 
 -(void) updateScore

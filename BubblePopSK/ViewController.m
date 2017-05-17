@@ -35,9 +35,9 @@
 {
     if ([segue.identifier  isEqual: @"settingsSegue"])
     {
-        SettingsViewController *destination = segue.destinationViewController;
-        destination.numberOfBubbles = self.numberOfBubbles;
-        destination.timer = self.timer;
+        //SettingsViewController *destination = segue.destinationViewController;
+//        destination.numberOfBubblesInt = self.numberOfBubbles;
+//        destination.timerInt = self.timer;
     }
     
 }
