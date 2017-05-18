@@ -23,11 +23,11 @@
         skView.showsNodeCount = YES;
         
         // Create and configure the scene.
-        SKScene * scene = [GameScene sceneWithSize:skView.bounds.size];
+        GameScene * scene = [GameScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
-        
+        [scene initialiseParentView:self];
         // Present the scene.
-        skView.scene.delegate = self;
+        //skView.scene.delegate = self;
         [skView presentScene:scene];
         
         if (skView.scene == nil)
@@ -38,8 +38,11 @@
     }
 }
 
--(void) dismissView{
-    [self dismissViewControllerAnimated:false completion:nil];
+-(void) dismissView
+{
+    //HighScoreSegue
+    [self performSegueWithIdentifier:@"HighScoreSegue" sender:nil];
+    //[self dismissViewControllerAnimated:false completion:nil];
 }
 
 - (void)transitionToOtherViewController
@@ -48,24 +51,30 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotate
+{
     return YES;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
         return UIInterfaceOrientationMaskAllButUpsideDown;
-    } else {
+    } else
+    {
         return UIInterfaceOrientationMaskAll;
     }
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (BOOL)prefersStatusBarHidden {
+- (BOOL)prefersStatusBarHidden
+{
     return YES;
 }
 

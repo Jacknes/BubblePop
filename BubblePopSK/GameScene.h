@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "GameViewController.h"
 
 @interface GameScene : SKScene
 @property (nonatomic, strong) SKLabelNode *counterLabel;
@@ -18,6 +19,8 @@
 @property (nonatomic) int maxBubbles;
 @property (nonatomic) NSMutableArray *tappedBubbles;
 @property (nonatomic) NSMutableArray *bubbles;
+@property GameViewController *vc;
+-(void) initialiseParentView: (GameViewController*) parentViewController;
 
 @end
 

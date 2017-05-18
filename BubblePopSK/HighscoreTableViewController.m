@@ -19,6 +19,10 @@
     [super viewDidLoad];
     [self sortHighScores];
 }
+- (IBAction)backButtonPress:(id)sender {
+    [self performSegueWithIdentifier:@"MainMenuSegue" sender:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 -(void) sortHighScores

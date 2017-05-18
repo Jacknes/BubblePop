@@ -10,12 +10,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import <GameplayKit/GameplayKit.h>
 
-@protocol TransitionDelegate <NSObject>
 
-- (void)transitionToOtherViewController;
-
-@end
-
-@interface GameViewController : UIViewController <TransitionDelegate>
-
+@interface GameViewController : UIViewController
+-(void) dismissView;
 @end

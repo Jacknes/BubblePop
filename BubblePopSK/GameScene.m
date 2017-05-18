@@ -7,7 +7,7 @@
 //
 
 #import "GameScene.h"
-#import "HighscoreTableViewController.h"
+#import "GameViewController.h"
 @interface GameScene ()
 @property (nonatomic) SKSpriteNode *bubble2;
 
@@ -17,7 +17,7 @@
 @implementation GameScene {
 }
 
-@synthesize counterLabel, timerLabel, countdownLabel, score, time, maxBubbles, tappedBubbles, bubbles, initialTime;
+@synthesize counterLabel, timerLabel, countdownLabel, score, time, maxBubbles, tappedBubbles, bubbles, initialTime, vc;
 
 
 
@@ -69,6 +69,11 @@
     return self;
 }
 
+
+-(void) initialiseParentView: (GameViewController*) parentViewController
+{
+    vc = parentViewController;
+}
 
 -(void) initialiseGame
 {
@@ -144,27 +149,30 @@
 
 -(void) gameOver
 {
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Game over!"
-                          message:nil
-                          delegate:self
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles:@"OK", nil];
-    [alert show];
+    
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Game Over!"
+//                                                                   message:[NSString stringWithFormat:@"You scored %i", score]
+//                                                            preferredStyle:UIAlertControllerStyleAlert];
+//    
+//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {}];
+//    
+//    [alert addAction:defaultAction];
+//    [alert show];
+    
+    
+    //[self presentViewController:alert animated:YES completion:nil];
+//    UIAlertView *alert = [[UIAlertView alloc]
+//                          initWithTitle:@"Game over!"
+//                          message:nil
+//                          delegate:self
+//                          cancelButtonTitle:@"Cancel"
+//                          otherButtonTitles:@"OK", nil];
+//    [alert show];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *name = [defaults stringForKey:@"PlayerName"];
-    
     [self addNewScore:name andScore:score];
-    
-    NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HighscoreTableViewController"];
-    //Call on the RootViewController to present the New View Controller
-    [self.view.window.rootViewController presentViewController:vc animated:YES completion:nil];
-    //[self.view presentScene:nil];
-    
-   
+    [vc dismissView];
     
 
     
@@ -181,7 +189,6 @@
         NSArray *newHighScores = [highScores arrayByAddingObject:[NSString stringWithFormat:@"%d", playerScore]];
         [defaults setObject:newHighScoreNames forKey:@"HighScoreNames"];
         [defaults setObject:newHighScores forKey:@"HighScores"];
-        [defaults synchronize];
     } else {
         NSMutableArray *highScoreNames = [[NSMutableArray alloc]init];
         NSMutableArray *highScores = [[NSMutableArray alloc]init];
@@ -191,6 +198,7 @@
         [defaults setObject:[highScores copy] forKey:@"HighScores"];
         
     }
+    [defaults synchronize];
 }
 
 
@@ -316,7 +324,7 @@
     bubble.position = CGPointMake(x, y);
     bubble.xScale = 0.75;
     bubble.yScale = 0.75;
-    if([self doesIntersectWithOther:bubble])
+    while([self doesIntersectWithOther:bubble])
     {
         int x = [self generateX: bubble];
         int y = [self generateY: bubble];
@@ -340,7 +348,7 @@
 -(int) generateY: (SKSpriteNode*) bubble
 {
     int minY = bubble.size.height / 2;
-    int maxY = self.frame.size.height - bubble.size.height / 2;
+    int maxY = self.frame.size.height - bubble.size.height / 2 - 20;
     int rangeY = maxY - minY;
     int actualY = (arc4random() % rangeY) + minY;
     return actualY;
@@ -355,6 +363,7 @@
  
         if (CGRectIntersectsRect(bubble.frame, tempBubble.frame))
         {
+            NSLog(@"Bubbles Collided");
             return true;
         }
     }
