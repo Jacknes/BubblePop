@@ -17,17 +17,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //NSArray *highscoreNames = [defaults arrayForKey:@"HighScoreNames"];
-//    NSArray *highscores = [defaults arrayForKey:@"HighScores"];
-//    int numbeOfRows = (int)highscoreNames.count;
+    [self sortHighScores];
 }
+
+
+-(void) sortHighScores
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *highscoreNames = [defaults arrayForKey:@"HighScoreNames"];
+    NSArray *highscores = [defaults arrayForKey:@"HighScores"];
+    NSMutableArray *mutableHigh = [[NSMutableArray alloc]initWithArray:highscores];
+    NSMutableArray *mutableHighNames = [[NSMutableArray alloc]initWithArray:highscoreNames];
+    NSMutableArray *newNames = [[NSMutableArray alloc] init];
+    NSMutableArray *newScores = [[NSMutableArray alloc] init];
+    
+    while([newScores count] != [highscores count])
+    {
+        int maxIndex = 0;
+        for (int i = 0; i < [mutableHigh count]; i++)
+        {
+            if ([[mutableHigh objectAtIndex:i]intValue] > [[mutableHigh objectAtIndex:maxIndex]intValue])
+            {
+                maxIndex = i;
+            }
+        }
+        //Remove the object from the initial arrays and place in the new ordered ones
+        [newNames addObject:[mutableHighNames objectAtIndex:maxIndex]];
+        [mutableHighNames removeObjectAtIndex:maxIndex];
+        [newScores addObject:[mutableHigh objectAtIndex:maxIndex]];
+        [mutableHigh removeObjectAtIndex:maxIndex];
+        maxIndex = 0;
+        
+        //Put the new sorted array back into the user defaults
+        [defaults setObject:[newNames copy] forKey:@"HighScoreNames"];
+        [defaults setObject:[newScores copy] forKey:@"HighScores"];
+        
+        
+        [defaults synchronize];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -35,11 +64,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -50,68 +77,24 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *simpleTableIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
+    }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *highscoreNames = [defaults arrayForKey:@"HighScoreNames"];
     NSArray *highscores = [defaults arrayForKey:@"HighScores"];
-    static NSString *cellID = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
-    // Authors
-    cell.textLabel.text = [highscoreNames objectAtIndex:(int)indexPath];
-    // Text
-    cell.detailTextLabel.text = [highscores objectAtIndex:(int)indexPath];
     
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@",[highscoreNames objectAtIndex:indexPath.row],[highscores objectAtIndex:indexPath.row]];
+    NSLog(@"Cell generated");
     return cell;
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

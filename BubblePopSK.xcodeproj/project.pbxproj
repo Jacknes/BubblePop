@@ -25,7 +25,6 @@
 		1469754C1ECBE4FC002DA212 /* PinkBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 146975481ECBE4FC002DA212 /* PinkBubble.png */; };
 		1469754D1ECBE4FC002DA212 /* RedBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 146975491ECBE4FC002DA212 /* RedBubble.png */; };
 		149765111ECC139500E74DC1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149765101ECC139500E74DC1 /* SettingsViewController.m */; };
-		14CEF6671ECC4A8C00ACCFD7 /* CountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CEF6661ECC4A8C00ACCFD7 /* CountDownViewController.m */; };
 		14CEF66D1ECC4EF600ACCFD7 /* HighscoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CEF66C1ECC4EF600ACCFD7 /* HighscoreTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +66,7 @@
 		146975281ECBDEC5002DA212 /* BubblePopSKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblePopSKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1469752C1ECBDEC5002DA212 /* BubblePopSKUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BubblePopSKUITests.m; sourceTree = "<group>"; };
 		1469752E1ECBDEC5002DA212 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1469753A1ECBDFAF002DA212 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = /Users/12545404/Desktop/BubblePopSK/BubblePopSK/ViewController.h; sourceTree = "<absolute>"; };
+		1469753A1ECBDFAF002DA212 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = /Users/jacknes/Documents/BubblePopSK/BubblePopSK/ViewController.h; sourceTree = "<absolute>"; };
 		1469753B1ECBDFAF002DA212 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		146975441ECBE413002DA212 /* BlueBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueBubble.png; sourceTree = "<group>"; };
 		146975461ECBE4FC002DA212 /* BlackBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlackBubble.png; sourceTree = "<group>"; };
@@ -76,8 +75,6 @@
 		146975491ECBE4FC002DA212 /* RedBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RedBubble.png; sourceTree = "<group>"; };
 		1497650F1ECC139500E74DC1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		149765101ECC139500E74DC1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		14CEF6651ECC4A8C00ACCFD7 /* CountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownViewController.h; sourceTree = "<group>"; };
-		14CEF6661ECC4A8C00ACCFD7 /* CountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownViewController.m; sourceTree = "<group>"; };
 		14CEF66B1ECC4EF600ACCFD7 /* HighscoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighscoreTableViewController.h; sourceTree = "<group>"; };
 		14CEF66C1ECC4EF600ACCFD7 /* HighscoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighscoreTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,8 +140,6 @@
 				1469750E1ECBDEC5002DA212 /* GameViewController.m */,
 				1497650F1ECC139500E74DC1 /* SettingsViewController.h */,
 				149765101ECC139500E74DC1 /* SettingsViewController.m */,
-				14CEF6661ECC4A8C00ACCFD7 /* CountDownViewController.m */,
-				14CEF6651ECC4A8C00ACCFD7 /* CountDownViewController.h */,
 				14CEF66B1ECC4EF600ACCFD7 /* HighscoreTableViewController.h */,
 				14CEF66C1ECC4EF600ACCFD7 /* HighscoreTableViewController.m */,
 				146975101ECBDEC5002DA212 /* Main.storyboard */,
@@ -337,7 +332,6 @@
 				1469750F1ECBDEC5002DA212 /* GameViewController.m in Sources */,
 				146975051ECBDEC5002DA212 /* AppDelegate.m in Sources */,
 				1469750C1ECBDEC5002DA212 /* GameScene.m in Sources */,
-				14CEF6671ECC4A8C00ACCFD7 /* CountDownViewController.m in Sources */,
 				14CEF66D1ECC4EF600ACCFD7 /* HighscoreTableViewController.m in Sources */,
 				149765111ECC139500E74DC1 /* SettingsViewController.m in Sources */,
 				146975021ECBDEC5002DA212 /* main.m in Sources */,

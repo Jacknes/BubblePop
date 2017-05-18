@@ -18,4 +18,6 @@
 @property (nonatomic) int maxBubbles;
 @property (nonatomic) NSMutableArray *tappedBubbles;
 @property (nonatomic) NSMutableArray *bubbles;
+
 @end
+

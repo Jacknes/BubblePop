@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-@property(strong,nonatomic) NSString *timer;
-@property(strong,nonatomic) NSString *numberOfBubbles;
+@property(nonatomic) int timer;
+@property(nonatomic) int numberOfBubbles;
+@property (weak, nonatomic) IBOutlet UITextField *playerTextField;
 
 @end
 

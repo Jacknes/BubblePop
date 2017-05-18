@@ -14,14 +14,11 @@
 @end
 
 @implementation ViewController
-@synthesize numberOfBubbles, timer;
+@synthesize numberOfBubbles, timer, playerTextField;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    numberOfBubbles = @"0";
-    timer = @"0";
-   
 }
 
 
@@ -33,14 +30,47 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier  isEqual: @"settingsSegue"])
+    if ([segue.identifier isEqual: @"settingsSegue"])
     {
-        //SettingsViewController *destination = segue.destinationViewController;
-//        destination.numberOfBubblesInt = self.numberOfBubbles;
-//        destination.timerInt = self.timer;
+        SettingsViewController *destination = segue.destinationViewController;
+        destination.numberOfBubblesInt = self.numberOfBubbles;
+        destination.timerInt = self.timer;
+        
+        
+    } else if ([segue.identifier isEqualToString:@"GameSegue"]) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSString *playerName = playerTextField.text;
+        if ([playerName  isEqual: @""]) {
+            playerName = @"Unnamed Player";
+        }
+        [defaults setObject:playerName forKey:@"PlayerName"];
+        
+        NSString *gameTimer = [NSString stringWithFormat:@"%i", self.timer];
+        if ([gameTimer  isEqual: @"0"]) {
+            gameTimer = @"60";
+        }
+        [defaults setObject:gameTimer forKey:@"GameTimer"];
+        
+        NSString *numberOfBubblesSave = [NSString stringWithFormat:@"%i", self.numberOfBubbles];
+        if ([numberOfBubblesSave  isEqual: @"0"]) {
+            numberOfBubblesSave = @"15";
+        }
+        [defaults setObject:numberOfBubblesSave forKey:@"NumberOfBubbles"];
+        
+        
+        [defaults synchronize];
     }
     
 }
+
+-(void) saveName
+{
+    
+}
+
+
 
 -(void) viewDidAppear:(BOOL)animated
 {

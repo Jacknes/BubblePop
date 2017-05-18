@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController.h"
+#import "HighscoreTableViewController.h"
 #import "GameScene.h"
 
 @implementation GameViewController
@@ -26,8 +27,25 @@
         scene.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
+        skView.scene.delegate = self;
         [skView presentScene:scene];
+        
+        if (skView.scene == nil)
+        {
+            NSLog(@"Success!");
+            [self dismissView];
+        }
     }
+}
+
+-(void) dismissView{
+    [self dismissViewControllerAnimated:false completion:nil];
+}
+
+- (void)transitionToOtherViewController
+{
+    HighscoreTableViewController *controller = [HighscoreTableViewController new];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (BOOL)shouldAutorotate {
@@ -50,5 +68,6 @@
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
 
 @end

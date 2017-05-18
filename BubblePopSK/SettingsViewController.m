@@ -73,11 +73,9 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    ViewController *destination = segue.destinationViewController;
-//    destination.numberOfBubbles = self.numberOfBubblesInt;
-    //destination.timer
-//    destination.timer = self.timer;
-    //[NSString stringWithFormat:@"%f",self.gameTimeSlider.value];
+    ViewController *destination = segue.destinationViewController;
+    destination.numberOfBubbles = self.numberOfBubblesInt;
+    destination.timer = self.timerInt;
 }
 
 

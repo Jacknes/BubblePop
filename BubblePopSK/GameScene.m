@@ -7,7 +7,7 @@
 //
 
 #import "GameScene.h"
-#import "HighScoreTableViewController.h"
+#import "HighscoreTableViewController.h"
 @interface GameScene ()
 @property (nonatomic) SKSpriteNode *bubble2;
 
@@ -47,16 +47,20 @@
 //            // your code here ...
 //        }];
 //        [node runAction:[SKAction sequence:@[wait, run]]];
-        maxBubbles = 15;
-        time = 45;
-        initialTime = 45;
-
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+        //[textBox.text intValue];
+         //NSArray *highScores = [defaults arrayForKey:@"HighScores"];
+        maxBubbles = [[defaults stringForKey:@"NumberOfBubbles"]intValue];
+        time = [[defaults stringForKey:@"GameTimer"]intValue];
+        initialTime = time;
+
+        //HighscoreTableViewController *vc = [[HighscoreTableViewController alloc] init];
+        //[ presentViewController:vc animated:YES completion:nil];
+        [self.view.window.rootViewController performSegueWithIdentifier:@"HighScoreSegue" sender:self];
         [self showCountdown];
-
-
-        [self initialiseGame];
+        //[self initialiseGame];
+        
       
         
         
@@ -105,6 +109,7 @@
     SKAction *updateLabelAndWait = [SKAction sequence:@[updateLabel, wait]];
     [countdownLabel runAction:[SKAction repeatAction:updateLabelAndWait count:3] completion:^{
                 [self.countdownLabel runAction:[SKAction fadeOutWithDuration:0]];
+        [self initialiseGame];
     }];
 }
 
@@ -146,12 +151,21 @@
                           cancelButtonTitle:@"Cancel"
                           otherButtonTitles:@"OK", nil];
     [alert show];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *name = [defaults stringForKey:@"PlayerName"];
     
-    [self addNewScore:@"jack" andScore:score];
+    [self addNewScore:name andScore:score];
     
     NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HighscoreTableViewController"];
+    //Call on the RootViewController to present the New View Controller
+    [self.view.window.rootViewController presentViewController:vc animated:YES completion:nil];
+    //[self.view presentScene:nil];
+    
+   
+    
 
     
 }
