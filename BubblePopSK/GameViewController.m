@@ -9,54 +9,49 @@
 #import "GameViewController.h"
 #import "HighscoreTableViewController.h"
 #import "GameScene.h"
+@import AVFoundation;
 
 @implementation GameViewController
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
+    NSError *error;
+    NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"Music" withExtension:@"mp3"]; //initialises background music
+    self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+    self.backgroundMusicPlayer.numberOfLoops = -1;
+    [self.backgroundMusicPlayer prepareToPlay];
+    [self.backgroundMusicPlayer play];
     // Configure the view.
-    SKView * skView = (SKView *)self.view;
+    SKView * skView = (SKView *)self.view; //initialises the SKView
     if (!skView.scene) {
-        skView.showsFPS = YES;
-        skView.showsNodeCount = YES;
+        
+        //Lines to debug game performance
+        //skView.showsFPS = YES;
+        //skView.showsNodeCount = YES;
         
         // Create and configure the scene.
         GameScene * scene = [GameScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
         [scene initialiseParentView:self];
+        
         // Present the scene.
-        //skView.scene.delegate = self;
         [skView presentScene:scene];
         
-        if (skView.scene == nil)
-        {
-            NSLog(@"Success!");
-            [self dismissView];
-        }
     }
 }
 
 -(void) dismissView
 {
-    //HighScoreSegue
-    [self performSegueWithIdentifier:@"HighScoreSegue" sender:nil];
-    //[self dismissViewControllerAnimated:false completion:nil];
-}
-
-- (void)transitionToOtherViewController
-{
-    HighscoreTableViewController *controller = [HighscoreTableViewController new];
-    [self.navigationController pushViewController:controller animated:YES];
+    [self performSegueWithIdentifier:@"HighScoreSegue" sender:nil]; //shows the highscore view
 }
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return YES; 
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations //allows rotation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
     {
@@ -75,7 +70,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return YES; //hide status bar
 }
 
 

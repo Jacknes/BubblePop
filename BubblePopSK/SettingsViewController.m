@@ -20,20 +20,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initialiseLabelsAndSliders:numberOfBubblesInt and:timerInt];
+    [self initialiseLabelsAndSliders:numberOfBubblesInt and:timerInt]; //initialise the sliders values from the data sent from main screen
     
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-    [self initialiseLabelsAndSliders:numberOfBubblesInt and:timerInt];
 }
 
 -(void) initialiseLabelsAndSliders: (int) numOfBubbles and: (int) timerValue;
 {
-    if (numOfBubbles!= 0)
+    if (numOfBubbles!= 0) //if there is data sent
     {
-        bubblesSlider.value = numOfBubbles;
+        bubblesSlider.value = numOfBubbles; //sent the slider to the right value
     }
     
     if (timerValue != 0)
@@ -41,16 +36,16 @@
         gameTimeSlider.value = timerValue;
     }
     
-    [self timerSliderStateChange:nil];
+    [self timerSliderStateChange:nil]; //update the labels
     [self bubbleSliderStateChange:nil];
 }
 
 - (IBAction)timerSliderStateChange:(id)sender
 {
-    int timerValue = gameTimeSlider.value;
+    int timerValue = gameTimeSlider.value; //get slider value
     NSString *strFromInt = [NSString stringWithFormat:@"%d",timerValue];
     timerInt = timerValue;
-    gameTimeLabel.text = strFromInt;
+    gameTimeLabel.text = strFromInt; //set the value of the labels
 }
 - (IBAction)bubbleSliderStateChange:(id)sender
 {
@@ -66,27 +61,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (IBAction)saveButtonPressed:(id)sender
-//{
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ViewController *destination = segue.destinationViewController;
+    ViewController *destination = segue.destinationViewController; //send the settings data back
     destination.numberOfBubbles = self.numberOfBubblesInt;
     destination.timer = self.timerInt;
 }
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
