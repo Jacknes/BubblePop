@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "286"
             endingLineNumber = "286"
-            landmarkName = "-randomColour:"
+            landmarkName = "-touchesBegan:withEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "295"
             endingLineNumber = "295"
-            landmarkName = "-generateBubbleLocation:"
+            landmarkName = "-touchesBegan:withEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "298"
             endingLineNumber = "298"
-            landmarkName = "-generateBubbleLocation:"
+            landmarkName = "-touchesBegan:withEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "333"
             endingLineNumber = "333"
-            landmarkName = "-doesIntersectWithOther:"
+            landmarkName = "-updateBubbles"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
             endingLineNumber = "328"
-            landmarkName = "-generateY:"
+            landmarkName = "-addScore:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,8 +95,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "363"
             endingLineNumber = "363"
-            landmarkName = "@implementation GameScene"
-            landmarkType = "3">
+            landmarkName = "-updateScore"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -111,7 +111,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "387"
             endingLineNumber = "387"
-            landmarkName = "-addScore:"
+            landmarkName = "-addNewScore:andScore:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "182"
             endingLineNumber = "182"
-            landmarkName = "-updateBubbles"
+            landmarkName = "-removeBubbles:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -143,7 +143,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
-            landmarkName = "-initialiseTimer"
+            landmarkName = "-drawLabels"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -159,7 +159,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
             endingLineNumber = "116"
-            landmarkName = "-initialiseTimer"
+            landmarkName = "-drawLabels"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
             endingLineNumber = "208"
-            landmarkName = "-removeBubbles:"
+            landmarkName = "-randomColour:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -191,7 +191,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "356"
             endingLineNumber = "356"
-            landmarkName = "-touchesBegan:withEvent:"
+            landmarkName = "-iterateCombo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "357"
             endingLineNumber = "357"
-            landmarkName = "-touchesBegan:withEvent:"
+            landmarkName = "-iterateCombo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
-            landmarkName = "-showCountdown"
+            landmarkName = "-drawLabels"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "111"
             endingLineNumber = "111"
-            landmarkName = "-initialiseTimer"
+            landmarkName = "-drawLabels"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,7 +255,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "91"
             endingLineNumber = "91"
-            landmarkName = "-showCountdown"
+            landmarkName = "-drawLabels"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
             endingLineNumber = "53"
-            landmarkName = "-initWithSize:"
+            landmarkName = "-initialiseTimer"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -303,7 +303,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
             endingLineNumber = "171"
-            landmarkName = "-addNewScore:andScore:"
+            landmarkName = "-addBubbles:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
